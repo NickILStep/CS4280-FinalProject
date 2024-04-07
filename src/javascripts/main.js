@@ -27,7 +27,7 @@ let  mtlLoader = new THREE.MTLLoader();
 mtlLoader.load('Town.mtl', function (MazeMaterials) {
     MazeMaterials.preload();
 
-    let objLoader = new THREE.ObjectLoader();
+    let objLoader = new THREE.OBJLoader();
     objLoader.setMaterials(MazeMaterials);
     objLoader.setPath('src/objects/');
     objLoader.load('MazeTown1.obj', function (mazeObject){
