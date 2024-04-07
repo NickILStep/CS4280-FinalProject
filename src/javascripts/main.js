@@ -23,24 +23,6 @@ let camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientW
 renderer.setSize(canvas.clientWidth, canvas.clientHeight)
 renderer.setClearColor(0xEEEEEE)
 
-let  mtlLoader = new MTLLoader();
-mtlLoader.setPath('src/textures');
-mtlLoader.load('Town.mtl', function (MazeMaterials) {
-    MazeMaterials.preload();
-
-    let objLoader = new OBJLoader();
-    objLoader.setMaterials(MazeMaterials);
-    objLoader.setPath('src/objects/');
-    objLoader.load('MazeTown1.obj', function (mazeObject){
-        mazeObject.position.x = 0;
-        mazeObject.position.y = 0;
-        mazeObject.position.z = 0;
-        scene.add(mazeObject)
-    });
-});
-
-
-
 let axes = new THREE.AxesHelper(10)
 scene.add(axes)
 
@@ -60,16 +42,53 @@ let ambientLight = new THREE.AmbientLight(0xFFFFFF)
 ambientLight.intensity = .9
 scene.add(ambientLight)
 
-// Floor
-let floorGeo = new THREE.PlaneGeometry(50, 35)
-let floorMat = new THREE.MeshPhongMaterial()
+// Ball
+let ballGeo = new THREE.SphereBufferGeometry(2.5, 40, 40)
+let ballMat = new THREE.MeshPhongMaterial()
 
-let floor = new THREE.Mesh(floorGeo, floorMat)
+let ball = new THREE.Mesh(ballGeo, ballMat)
 
-floor.position.set(0, 0, 0)
-floor.material.color = new THREE.Color(1, 0, 1)
-floor.rotateX(-Math.PI / 2)
-scene.add(floor)
+ball.position.set(-3, 2.5, -.5)
+ball.material.color = new THREE.Color(0, .8, .8)
+scene.add(ball)
+
+// Maze
+let  mtlLoader = new MTLLoader();
+mtlLoader.setPath('src/textures');
+mtlLoader.load('Town.mtl', function (MazeMaterials) {
+    MazeMaterials.preload();
+
+    let objLoader = new OBJLoader();
+    objLoader.setMaterials(MazeMaterials);
+    objLoader.setPath('src/objects/');
+    objLoader.load('MazeTown1.obj', function (mazeObject){
+        mazeObject.position.x = 0;
+        mazeObject.position.y = 0;
+        mazeObject.position.z = 0;
+        scene.add(mazeObject)
+    });
+});
+
+// ------------ Professor's code ------------------
+// let mtl_file = './models/pokemon/charizar.mtl';
+// let obj_file = './models/pokemon/charizar.obj';
+//
+// var mtlLoader = new MTLLoader();
+// mtlLoader.load(mtl_file,
+//     function(materials){
+//
+//         materials.preload()
+//
+//         var objLoader = new OBJLoader();
+//         objLoader.setMaterials(materials)
+//         objLoader.load(
+//             obj_file,
+//             function (object){
+//                 object.name = 'charizard'
+//                 scene.add(object);
+//             });
+//     });
+// ------------------------------------------------
 
 // Render
 function animate() {
