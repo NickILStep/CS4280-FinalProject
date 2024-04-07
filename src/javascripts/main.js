@@ -24,6 +24,7 @@ renderer.setSize(canvas.clientWidth, canvas.clientHeight)
 renderer.setClearColor(0xEEEEEE)
 
 let  mtlLoader = new MTLLoader();
+mtlLoader.setPath('src/textures');
 mtlLoader.load('Town.mtl', function (MazeMaterials) {
     MazeMaterials.preload();
 
@@ -31,7 +32,9 @@ mtlLoader.load('Town.mtl', function (MazeMaterials) {
     objLoader.setMaterials(MazeMaterials);
     objLoader.setPath('src/objects/');
     objLoader.load('MazeTown1.obj', function (mazeObject){
+        mazeObject.position.x = 0;
         mazeObject.position.y = 0;
+        mazeObject.position.z = 0;
         scene.add(mazeObject)
     });
 });
