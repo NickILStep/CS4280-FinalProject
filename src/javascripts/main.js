@@ -1,6 +1,8 @@
 import * as THREE from 'three'
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls'
 import * as dat from 'dat.gui'
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader'
+import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader'
 
 // Required by Webpack - do not touch
 require.context('../', true, /\.(html|json|txt|dat)$/i)
@@ -20,6 +22,21 @@ let camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientW
 
 renderer.setSize(canvas.clientWidth, canvas.clientHeight)
 renderer.setClearColor(0xEEEEEE)
+
+let  mtlLoader = new THREE.MTLLoader();
+mtlLoader.load('Town.mtl', function (MazeMaterials) {
+    MazeMaterials.preload();
+
+    let objLoader = new THREE.ObjectLoader();
+    objLoader.setMaterials(MazeMaterials);
+    objLoader.setPath('src/objects/');
+    objLoader.load('MazeTown1.obj', function (mazeObject){
+        mazeObject.position.y = 0;
+        scene.add(mazeObject)
+    });
+});
+
+
 
 let axes = new THREE.AxesHelper(10)
 scene.add(axes)
