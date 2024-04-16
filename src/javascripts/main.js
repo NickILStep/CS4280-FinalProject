@@ -5,7 +5,7 @@ import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
 
 // Required by Webpack - do not touch
-require.context('../', true, /\.(html|json|txt|dat)$/i)
+require.ncontext('../', true, /\.(html|json|txt|dat)$/i)
 require.context('../images/', true, /\.(gif|jpg|png|svg|eot|ttf|woff|woff2)$/i)
 require.context('../stylesheets/', true, /\.(css|scss)$/i)
 
@@ -26,6 +26,8 @@ renderer.setClearColor(0xEEEEEE)
 let axes = new THREE.AxesHelper(10)
 scene.add(axes)
 
+
+//Camera
 let cameraControls = new OrbitControls(camera, renderer.domElement)
 cameraControls.addEventListener("change", function(){
     renderer.render(scene, camera)
@@ -99,12 +101,37 @@ mtlLoader.load(
 
 // Render
 function animate() {
+
+
+    //psuecode for ball moving R = ball.radius
+
+    //if a and not d then rotate x degrees left
+    //if a and not d then move position 2piR(x/360) left
+
+    //if d and not a then rotate x degrees right
+    //if d and not a then move position 2piR(x/360) right
+
+    //if w and not s then rotate x degrees forward
+    //if w and not s then move position 2piR(x/360) forward
+
+    //if s and not w then rotate x degrees backward
+    //if s and not w then move position 2piR(x/360) backward
+
+
+
+
+
     camera.position.x = controls.radius * Math.sin(controls.theta) * Math.cos(controls.phi)
     camera.position.y = controls.radius * Math.cos(controls.theta)
     camera.position.z = controls.radius * Math.sin(controls.theta) * Math.sin(controls.phi)
+    //camera.position.x = ball.position.x
+    //camera.position.y = ball.position.y
+    //camera.position.z = ball.position.z + controls.radius
 
     camera.lookAt(scene.position)
+    //camera.lookAt(ball.position)
     renderer.render(scene, camera)
+    //remove line
     cameraControls.update()
 }
 
