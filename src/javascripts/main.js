@@ -1,8 +1,8 @@
-import * as THREE from 'three'
-import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls'
-import * as dat from 'dat.gui'
-import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader'
-import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader'
+import * as THREE from 'three';
+import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
+import * as dat from 'dat.gui';
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
+import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
 
 // Required by Webpack - do not touch
 require.context('../', true, /\.(html|json|txt|dat)$/i)
@@ -53,21 +53,28 @@ ball.material.color = new THREE.Color(0, .8, .8)
 scene.add(ball)
 
 // Maze
-let  mtlLoader = new MTLLoader();
-mtlLoader.setPath('src/textures');
-mtlLoader.load('Town.mtl', function (MazeMaterials) {
-    MazeMaterials.preload();
+let mtl_file = './models/Town.mtl';
+let obj_file = './models/MazeTown1.obj';
 
-    let objLoader = new OBJLoader();
-    objLoader.setMaterials(MazeMaterials);
-    objLoader.setPath('src/objects/');
-    objLoader.load('MazeTown1.obj', function (mazeObject){
-        mazeObject.position.x = 0;
-        mazeObject.position.y = 0;
-        mazeObject.position.z = 0;
-        scene.add(mazeObject)
-    });
-});
+let  mtlLoader = new MTLLoader();
+// mtlLoader.setPath('src/textures');
+mtlLoader.load(
+    mtl_file,
+    function (materials) {
+        materials.preload();
+
+        var objLoader = new OBJLoader();
+        objLoader.setMaterials(materials);
+        // objLoader.setPath('src/objects/');
+        objLoader.load(
+            obj_file,
+            function (object){
+                object.name = 'maze'
+                scene.add(object);
+            }
+        );
+    }
+);
 
 // ------------ Professor's code ------------------
 // let mtl_file = './models/pokemon/charizar.mtl';
