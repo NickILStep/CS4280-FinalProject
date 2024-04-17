@@ -26,6 +26,12 @@ renderer.setClearColor(0xEEEEEE)
 let axes = new THREE.AxesHelper(10)
 scene.add(axes)
 
+//ball radius variable for easy control
+let ballRadius = 2.5;
+
+
+//keyboard
+let keyboard = {};
 
 //Camera
 let cameraControls = new OrbitControls(camera, renderer.domElement)
@@ -36,7 +42,8 @@ cameraControls.addEventListener("change", function(){
 let controls = {
     radius: 400,
     theta: 1,
-    phi: 1
+    phi: 1,
+    rotationSpeed: 1
 }
 
 // Lighting
@@ -45,7 +52,7 @@ ambientLight.intensity = .9
 scene.add(ambientLight)
 
 // Ball
-let ballGeo = new THREE.SphereBufferGeometry(2.5, 40, 40)
+let ballGeo = new THREE.SphereBufferGeometry(ballRadius, 40, 40)
 let ballMat = new THREE.MeshPhongMaterial()
 
 let ball = new THREE.Mesh(ballGeo, ballMat)
@@ -104,19 +111,39 @@ function animate() {
 
 
     //psuecode for ball moving R = ball.radius
+    //keyboard[87] W key
+    //keyboard[83] S key
+    //keyboard[65] A key
+    //keyboard[68] D key
 
-    //if a and not d then rotate x degrees left
-    //if a and not d then move position 2piR(x/360) left
 
-    //if d and not a then rotate x degrees right
-    //if d and not a then move position 2piR(x/360) right
+    if(keyboard[65] && !keyboard[83]) { // A key and not D
+    //rotate x degrees left
+    ball.rotation.x -= controls.rotationSpeed
+    //move position 2piR(x/360) left
+    ball.position.x -= 2 * Math.PI * ballRadius * (controls.rotationSpeed/360)
+    }
 
-    //if w and not s then rotate x degrees forward
-    //if w and not s then move position 2piR(x/360) forward
+    if(keyboard[68] && !keyboard[65]) { // D key and not A
+    //rotate x degrees right
+    ball.rotation.x += controls.rotationSpeed
+    //move position 2piR(x/360) right
+    ball.position.x += 2 * Math.PI * ballRadius * (controls.rotationSpeed/360)
+    }
 
-    //if s and not w then rotate x degrees backward
-    //if s and not w then move position 2piR(x/360) backward
+    if(keyboard[87] && !keyboard[83]) { // W key and not S
+    //rotate x degrees forward
+    ball.rotation.y += controls.rotationSpeed
+    //move position 2piR(x/360) forward
+    ball.position.y += 2 * Math.PI * ballRadius * (controls.rotationSpeed/360)
+    }
 
+    if(keyboard[83] && !keyboard[87]) { // S key and not W
+    //rotate x degrees backward
+    ball.rotation.y -= controls.rotationSpeed
+    //move position 2piR(x/360) backward
+    ball.position.y -= 2 * Math.PI * ballRadius * (controls.rotationSpeed/360)
+    }
 
 
 
@@ -136,3 +163,14 @@ function animate() {
 }
 
 animate()
+
+function keyDown(event){
+    keyboard[event.keyCode] = true;
+}
+
+function keyUp(event){
+    keyboard[event.keyCode] = false;
+}
+
+window.addEventListener('keydown', keyDown);
+window.addEventListener('keyup', keyUp);
