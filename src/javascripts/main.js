@@ -44,7 +44,7 @@ ambientLight.intensity = .9
 scene.add(ambientLight)
 
 // Ball
-let ballGeo = new THREE.SphereBufferGeometry(.2, 40, 40)
+let ballGeo = new THREE.SphereBufferGeometry(.1, 40, 40)
 let ballMat = new THREE.MeshPhongMaterial()
 
 let ball = new THREE.Mesh(ballGeo, ballMat)
@@ -110,33 +110,50 @@ function animate() {
     renderer.render(scene, camera)
     cameraControls.update()
 
+
     requestAnimationFrame(animate)
+    requestAnimationFrame(executeMovement)
 
     if (ball.position.x < -14 && ball.position.z < -8 && !won) {
         window.alert("You Win!");
         won = true;
     }
+
+
 }
 
 window.alert("Reach the tower in the North West corner of the map!");
 
 animate()
 
-document.addEventListener("keydown", onDocumentKeyDown, false);
-function onDocumentKeyDown(event){
-    var keyCode = event.which;
-    var speed = .5;
+var keyMap = [];
+document.addEventListener("keydown", onDocumentKeyDown, true);
+document.addEventListener("keyup", onDocumentKeyUp, true);
 
-    if (keyCode === 87) {
+function onDocumentKeyDown(event){
+    var keyCode = event.keyCode;
+    keyMap[keyCode] = true;
+    executeMovement();
+}
+function onDocumentKeyUp(event){
+    var keyCode = event.keyCode;
+    keyMap[keyCode] = false;
+
+}
+function executeMovement()
+{
+    let speed = .02;
+
+    if (keyMap[87] && !keyMap[83]) {
         ball.position.z -= speed;
     }
-    else if (keyCode === 83) {
+    if (keyMap[83] && !keyMap[87]) {
         ball.position.z += speed;
     }
-    else if (keyCode === 65) {
+    if (keyMap[65] && !keyMap[68]) {
         ball.position.x -= speed;
     }
-    else if (keyCode === 68) {
+    if (keyMap[68] && !keyMap[65]) {
         ball.position.x += speed;
     }
 
