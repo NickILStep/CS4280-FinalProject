@@ -27,17 +27,25 @@ renderer.setClearColor(0xEEEEEE)
 // let axes = new THREE.AxesHelper(10)
 // scene.add(axes)
 
-let speed = 0.02;
+let speed = 0.08;
 
 let cameraControls = new OrbitControls(camera, renderer.domElement)
-
-
-
 
 // Lighting
 let ambientLight = new THREE.AmbientLight(0xFFFFFF)
 ambientLight.intensity = .9
 scene.add(ambientLight)
+
+// Floor
+let floorGeo = new THREE.PlaneGeometry(100, 100)
+let floorMat = new THREE.MeshPhongMaterial()
+
+let floor = new THREE.Mesh(floorGeo, floorMat)
+
+floor.position.set(0, 0.2, 0)
+floor.material.color = new THREE.Color(0, .5, .8)
+floor.rotateX(-Math.PI / 2)
+scene.add(floor)
 
 // Ball
 let ballGeo = new THREE.SphereBufferGeometry(.1, 40, 40)

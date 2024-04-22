@@ -33,16 +33,12 @@ body {
       flex: 3 3 0px;
       padding-right: 1.2em;
 
-      > canvas { 
+      > canvas {
         width: 100%;
+        max-width: 1000px;
         height: 80vh;
-        border: 1px solid rgb(137, 185, 245); 
+        border: 1px solid rgb(137, 185, 245);
       }
-    }
-
-    > aside {
-      background: rgb(221, 236, 250);
-      flex: 1 1 0px;
     }
   }
 
