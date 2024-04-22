@@ -27,6 +27,9 @@ renderer.setClearColor(0xEEEEEE)
 // Loading textures
 let texLoader = new THREE.TextureLoader()
 let textures = {
+    basketball: texLoader.load('./images/Basketball.png', function(){
+        renderer.render(scene, camera)
+    }),
     waterPaint: texLoader.load('./images/waterPaint.jpg', function(){
         renderer.render(scene, camera)
     }),
@@ -81,12 +84,13 @@ scene.add(water)
 
 // Ball
 let ballGeo = new THREE.SphereBufferGeometry(.1, 40, 40)
-let ballMat = new THREE.MeshPhongMaterial()
+let ballMat = new THREE.MeshPhongMaterial({
+    map: textures['basketball'] // Apply water paint texture
+});
 
 let ball = new THREE.Mesh(ballGeo, ballMat)
 
 ball.position.set(7.5, .7, 13)
-ball.material.color = new THREE.Color(0, .8, .8)
 ball.name = 'ball'
 
 
