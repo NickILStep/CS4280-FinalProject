@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
-import * as dat from 'dat.gui';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader';
+import { Water } from 'three/examples/jsm/objects/Water2'
 
 // Required by Webpack - do not touch
 require.context('../', true, /\.(html|json|txt|dat)$/i)
@@ -24,10 +24,22 @@ let camera = new THREE.PerspectiveCamera(45, canvas.clientWidth / canvas.clientW
 renderer.setSize(canvas.clientWidth, canvas.clientHeight)
 renderer.setClearColor(0xEEEEEE)
 
-// let axes = new THREE.AxesHelper(10)
-// scene.add(axes)
+// Loading textures
+let texLoader = new THREE.TextureLoader()
+let textures = {
+    waterPaint: texLoader.load('./images/waterPaint.jpg', function(){
+        renderer.render(scene, camera)
+    }),
+    water1: texLoader.load('./images/water_normal_1.jpg', function(){
+        renderer.render(scene, camera)
+    }),
+    water2: texLoader.load('./images/water_normal_2.jpg', function(){
+        renderer.render(scene, camera)
+    })
 
-let speed = 0.08;
+}
+
+let speed = 0.04;
 
 let cameraControls = new OrbitControls(camera, renderer.domElement)
 
@@ -36,16 +48,36 @@ let ambientLight = new THREE.AmbientLight(0xFFFFFF)
 ambientLight.intensity = .9
 scene.add(ambientLight)
 
-// Floor
+// Water Floor
 let floorGeo = new THREE.PlaneGeometry(100, 100)
-let floorMat = new THREE.MeshPhongMaterial()
+let floorMat = new THREE.MeshPhongMaterial({
+    map: textures['waterPaint'] // Apply water paint texture
+});
 
 let floor = new THREE.Mesh(floorGeo, floorMat)
 
 floor.position.set(0, 0.2, 0)
-floor.material.color = new THREE.Color(0, .5, .8)
+//floor.material.color = new THREE.Color(0, .5, .8)
+
 floor.rotateX(-Math.PI / 2)
 scene.add(floor)
+
+//Water Texture
+let waterGeometry = new THREE.PlaneBufferGeometry(500, 300)
+let water = new Water(waterGeometry, {
+    color: '#FFFFFF',
+    scale: 4,
+    flowDirection: new THREE.Vector2(1, 1),
+    textureWidth: 1024,
+    textureHeight: 1024,
+    normalMap0: textures['water1'],
+    normalMap1: textures['water2']
+})
+
+water.position.y = 0.3
+water.rotation.x = Math.PI * -0.5;
+scene.add(water)
+
 
 // Ball
 let ballGeo = new THREE.SphereBufferGeometry(.1, 40, 40)

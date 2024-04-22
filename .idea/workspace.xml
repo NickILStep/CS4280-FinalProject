@@ -5,6 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8e480307-abba-4bee-aff3-a445a938fd9f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/images/waterPaint.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/images/water_normal_1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/images/water_normal_2.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/javascripts/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/javascripts/main.js" afterDir="false" />
     </list>
@@ -32,23 +35,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/nicki/OneDrive/Documents/College/2024a Spring Semester/CS 4280/cs4280-starter-project/src&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "C:/Users/Chance/Documents/GitHub/CS4280-FinalProject/src/images",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Chance\Documents\GitHub\CS4280-FinalProject\src\images" />
       <recent name="C:\Users\nicki\OneDrive\Documents\College\2024a Spring Semester\CS 4280\cs4280-starter-project\src" />
     </key>
   </component>
@@ -65,6 +69,8 @@
       <workItem from="1712461795902" duration="814000" />
       <workItem from="1713310090557" duration="2665000" />
       <workItem from="1713739632496" duration="5474000" />
+      <workItem from="1713814584261" duration="328000" />
+      <workItem from="1713814935972" duration="849000" />
     </task>
     <task id="LOCAL-00001" summary="Added movement, camera follow, win condition. Just need collision">
       <option name="closed" value="true" />
@@ -83,5 +89,17 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added movement, camera follow, win condition. Just need collision" />
     <option name="LAST_COMMIT_MESSAGE" value="Added movement, camera follow, win condition. Just need collision" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/javascripts/main.js</url>
+          <line>59</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
