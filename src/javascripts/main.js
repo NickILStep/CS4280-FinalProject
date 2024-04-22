@@ -27,16 +27,12 @@ renderer.setClearColor(0xEEEEEE)
 // let axes = new THREE.AxesHelper(10)
 // scene.add(axes)
 
-let cameraControls = new OrbitControls(camera, renderer.domElement)
-// cameraControls.addEventListener("change", function(){
-//     renderer.render(scene, camera)
-// })
+let speed = 0.02;
 
-let controls = {
-    radius: 10,
-    theta: 1,
-    phi: 1
-}
+let cameraControls = new OrbitControls(camera, renderer.domElement)
+
+
+
 
 // Lighting
 let ambientLight = new THREE.AmbientLight(0xFFFFFF)
@@ -49,9 +45,11 @@ let ballMat = new THREE.MeshPhongMaterial()
 
 let ball = new THREE.Mesh(ballGeo, ballMat)
 
-ball.position.set(7.5, 1, 13)
+ball.position.set(7.5, .7, 13)
 ball.material.color = new THREE.Color(0, .8, .8)
 ball.name = 'ball'
+
+
 scene.add(ball)
 
 // Maze
@@ -76,37 +74,21 @@ mtlLoader.load(
     }
 );
 
-// ------------ Professor's code ------------------
-// let mtl_file = './models/pokemon/charizar.mtl';
-// let obj_file = './models/pokemon/charizar.obj';
-//
-// var mtlLoader = new MTLLoader();
-// mtlLoader.load(mtl_file,
-//     function(materials){
-//
-//         materials.preload()
-//
-//         var objLoader = new OBJLoader();
-//         objLoader.setMaterials(materials)
-//         objLoader.load(
-//             obj_file,
-//             function (object){
-//                 object.name = 'charizard'
-//                 scene.add(object);
-//             });
-//     });
-// ------------------------------------------------
 
 // Render
 var won = false;
 
-function animate() {
-    camera.position.x = controls.radius * Math.sin(controls.theta) * Math.cos(controls.phi)
-    camera.position.y = controls.radius * Math.cos(controls.theta)
-    camera.position.z = controls.radius * Math.sin(controls.theta) * Math.sin(controls.phi)
+function updateCamera() {
+    // Set camera position relative to the ball
+    camera.position.set(ball.position.x, ball.position.y + 10, ball.position.z);
 
-    camera.position.set(ball.position.x, ball.position.y + 10, ball.position.z)
-    camera.lookAt(ball.position)
+    // Make the camera look at the ball
+    camera.lookAt(ball.position);
+}
+
+function animate() {
+
+    updateCamera();
     renderer.render(scene, camera)
     cameraControls.update()
 
@@ -114,9 +96,10 @@ function animate() {
     requestAnimationFrame(animate)
     requestAnimationFrame(executeMovement)
 
-    if (ball.position.x < -14 && ball.position.z < -8 && !won) {
+    if (ball.position.x < -14.75 && ball.position.z < -8 && !won) {
         window.alert("You Win!");
         won = true;
+        speed = 0;
     }
 
 
@@ -140,23 +123,51 @@ function onDocumentKeyUp(event){
     keyMap[keyCode] = false;
 
 }
-function executeMovement()
-{
-    let speed = .02;
+function executeMovement() {
+
+    let movement = new THREE.Vector3(0, 0, 0);
 
     if (keyMap[87] && !keyMap[83]) {
-        ball.position.z -= speed;
+        movement.z -= speed;
     }
     if (keyMap[83] && !keyMap[87]) {
-        ball.position.z += speed;
+        movement.z += speed;
     }
     if (keyMap[65] && !keyMap[68]) {
-        ball.position.x -= speed;
+        movement.x -= speed;
     }
     if (keyMap[68] && !keyMap[65]) {
-        ball.position.x += speed;
+        movement.x += speed;
     }
 
-    console.log(ball.position)
+    // Check if there's a collision before moving the ball
+   if (!checkCollision(movement)) {
+        ball.position.add(movement);
+   }
+
+
 }
 
+function checkCollision(movement) {
+    let mazeObject = scene.getObjectByName('maze');
+    if (!mazeObject) return true; // Assume collision if maze object is not found
+
+    let CheckDistance = 0.15; // Set your desired maximum distance for collision detection
+
+    let forwardRaycaster = new THREE.Raycaster(ball.position, movement.clone().normalize());
+    forwardRaycaster.far = CheckDistance; // Set the maximum distance for the ray
+
+    let forwardIntersects = forwardRaycaster.intersectObject(mazeObject, true);
+
+    if (forwardIntersects.length > 0) {
+        // If collision in forward direction, check if moving backward is possible
+        let reverseMovement = movement.clone().multiplyScalar(-1);
+        let reverseRaycaster = new THREE.Raycaster(ball.position, reverseMovement.clone().normalize());
+        reverseRaycaster.far = maxDistance; // Set the maximum distance for the reverse ray
+        let reverseIntersects = reverseRaycaster.intersectObject(mazeObject, true);
+        return reverseIntersects.length > 0;
+    }
+
+    // No collision detected in the forward direction
+    return false;
+}
