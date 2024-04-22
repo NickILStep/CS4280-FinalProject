@@ -5,9 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8e480307-abba-4bee-aff3-a445a938fd9f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/images/waterPaint.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/images/water_normal_1.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/images/water_normal_2.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/javascripts/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/javascripts/main.js" afterDir="false" />
     </list>
@@ -70,7 +67,7 @@
       <workItem from="1713310090557" duration="2665000" />
       <workItem from="1713739632496" duration="5474000" />
       <workItem from="1713814584261" duration="328000" />
-      <workItem from="1713814935972" duration="849000" />
+      <workItem from="1713814935972" duration="1108000" />
     </task>
     <task id="LOCAL-00001" summary="Added movement, camera follow, win condition. Just need collision">
       <option name="closed" value="true" />

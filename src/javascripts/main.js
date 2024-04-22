@@ -56,7 +56,7 @@ let floorMat = new THREE.MeshPhongMaterial({
 
 let floor = new THREE.Mesh(floorGeo, floorMat)
 
-floor.position.set(0, 0.2, 0)
+floor.position.set(0, 0.186, 0)
 //floor.material.color = new THREE.Color(0, .5, .8)
 
 floor.rotateX(-Math.PI / 2)
@@ -74,7 +74,7 @@ let water = new Water(waterGeometry, {
     normalMap1: textures['water2']
 })
 
-water.position.y = 0.3
+water.position.y = 0.187
 water.rotation.x = Math.PI * -0.5;
 scene.add(water)
 
