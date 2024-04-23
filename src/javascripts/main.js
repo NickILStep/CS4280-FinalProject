@@ -152,10 +152,12 @@ window.alert("Reach the tower in the North West corner of the map! Use WASD to r
 //Begin Animations
 animate()
 
+// Get user input
 let keyMap = [];
 document.addEventListener("keydown", onDocumentKeyDown, true);
 document.addEventListener("keyup", onDocumentKeyUp, true);
 
+// Movement controls
 function onDocumentKeyDown(event){
     let keyCode = event.keyCode;
     keyMap[keyCode] = true;
@@ -170,6 +172,7 @@ function onDocumentKeyUp(event){
 //Variable for controlling ball roll speed
 let speed = 0.03;
 
+// Motion of the ball
 function executeMovement() {
 
     let movement = new THREE.Vector3(0, 0, 0);
@@ -191,8 +194,10 @@ function executeMovement() {
    if (!checkCollision(movement)) {
         ball.position.add(movement);
 
+        // Rotation of the ball
        let rotationSpeed = 1.1;
 
+       // Rotate the ball around the world z-axis based on movement along the x-axis
        ball.rotateOnWorldAxis(new THREE.Vector3(0, 0, 1), -movement.x * rotationSpeed);
 
        // Rotate the ball around the world x-axis based on movement along the z-axis
@@ -202,11 +207,12 @@ function executeMovement() {
 
 }
 
+// Check for collision between the ball and the maze
 function checkCollision(movement) {
     let mazeObject = scene.getObjectByName('maze');
     if (!mazeObject) return true; // Assume collision if maze object is not found
 
-    let CheckDistance = 0.15; // Set your desired maximum distance for collision detection
+    let CheckDistance = 0.15; // Set the maximum distance for collision detection
 
     let forwardRaycaster = new THREE.Raycaster(ball.position, movement.clone().normalize());
     forwardRaycaster.far = CheckDistance; // Set the maximum distance for the ray
