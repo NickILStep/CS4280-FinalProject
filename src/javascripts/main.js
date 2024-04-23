@@ -9,13 +9,12 @@ require.context('../', true, /\.(html|json|txt|dat)$/i)
 require.context('../images/', true, /\.(gif|jpg|png|svg|eot|ttf|woff|woff2)$/i)
 require.context('../stylesheets/', true, /\.(css|scss)$/i)
 
-// First: Set up your name
+// Name Setup
 let std_name = "Chance Hardman & Nicholas Stephenson"
 document.querySelector('#std_name').innerHTML = `<strong>${std_name}</strong>`
 
-//Then: comes everything else
 
-// Setup and controls
+// Scene Setup
 let canvas = document.querySelector('#webgl-scene')
 let scene = new THREE.Scene()
 let renderer = new THREE.WebGLRenderer({canvas})
@@ -42,9 +41,15 @@ let textures = {
 
 }
 
-let speed = 0.03;
-
+//Camera
 let cameraControls = new OrbitControls(camera, renderer.domElement)
+function updateCamera() {
+    // Set camera position relative to the ball
+    camera.position.set(ball.position.x, ball.position.y + 10, ball.position.z);
+
+    // Make the camera look at the ball
+    camera.lookAt(ball.position);
+}
 
 // Lighting
 let ambientLight = new THREE.AmbientLight(0xFFFFFF)
@@ -94,7 +99,6 @@ let ball = new THREE.Mesh(ballGeo, ballMat)
 ball.position.set(7.5, .7, 13)
 ball.name = 'ball'
 
-
 scene.add(ball)
 
 // Maze
@@ -107,7 +111,7 @@ mtlLoader.load(
     function (materials) {
         materials.preload();
 
-        var objLoader = new OBJLoader();
+        let objLoader = new OBJLoader();
         objLoader.setMaterials(materials);
         objLoader.load(
             obj_file,
@@ -120,16 +124,8 @@ mtlLoader.load(
 );
 
 
-// Render
-var won = false;
-
-function updateCamera() {
-    // Set camera position relative to the ball
-    camera.position.set(ball.position.x, ball.position.y + 10, ball.position.z);
-
-    // Make the camera look at the ball
-    camera.lookAt(ball.position);
-}
+//Victory Flag
+let won = false;
 
 function animate() {
 
@@ -150,24 +146,30 @@ function animate() {
 
 }
 
-window.alert("Reach the tower in the North West corner of the map!");
+//Instructions pop up
+window.alert("Reach the tower in the North West corner of the map! Use WASD to roll around.");
 
+//Begin Animations
 animate()
 
-var keyMap = [];
+let keyMap = [];
 document.addEventListener("keydown", onDocumentKeyDown, true);
 document.addEventListener("keyup", onDocumentKeyUp, true);
 
 function onDocumentKeyDown(event){
-    var keyCode = event.keyCode;
+    let keyCode = event.keyCode;
     keyMap[keyCode] = true;
     executeMovement();
 }
 function onDocumentKeyUp(event){
-    var keyCode = event.keyCode;
+    let keyCode = event.keyCode;
     keyMap[keyCode] = false;
 
 }
+
+//Variable for controlling ball roll speed
+let speed = 0.03;
+
 function executeMovement() {
 
     let movement = new THREE.Vector3(0, 0, 0);
@@ -189,7 +191,7 @@ function executeMovement() {
    if (!checkCollision(movement)) {
         ball.position.add(movement);
 
-       let rotationSpeed = 1.1; // Adjust rotation speed as needed
+       let rotationSpeed = 1.1;
 
        ball.rotateOnWorldAxis(new THREE.Vector3(0, 0, 1), -movement.x * rotationSpeed);
 
