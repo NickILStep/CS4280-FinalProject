@@ -42,7 +42,7 @@ let textures = {
 
 }
 
-let speed = 0.04;
+let speed = 0.03;
 
 let cameraControls = new OrbitControls(camera, renderer.domElement)
 
@@ -60,7 +60,7 @@ let floorMat = new THREE.MeshPhongMaterial({
 let floor = new THREE.Mesh(floorGeo, floorMat)
 
 floor.position.set(0, 0.186, 0)
-//floor.material.color = new THREE.Color(0, .5, .8)
+
 
 floor.rotateX(-Math.PI / 2)
 scene.add(floor)
@@ -83,7 +83,8 @@ scene.add(water)
 
 
 // Ball
-let ballGeo = new THREE.SphereBufferGeometry(.1, 40, 40)
+let ballRadius = 0.1
+let ballGeo = new THREE.SphereBufferGeometry(ballRadius, 40, 40)
 let ballMat = new THREE.MeshPhongMaterial({
     map: textures['basketball'] // Apply water paint texture
 });
@@ -187,6 +188,13 @@ function executeMovement() {
     // Check if there's a collision before moving the ball
    if (!checkCollision(movement)) {
         ball.position.add(movement);
+
+       let rotationSpeed = 1.1; // Adjust rotation speed as needed
+
+       ball.rotateOnWorldAxis(new THREE.Vector3(0, 0, 1), -movement.x * rotationSpeed);
+
+       // Rotate the ball around the world x-axis based on movement along the z-axis
+       ball.rotateOnWorldAxis(new THREE.Vector3(1, 0, 0), movement.z * rotationSpeed);
    }
 
 
